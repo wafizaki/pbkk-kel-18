@@ -14,9 +14,9 @@
         </div>
 
         <div class="mt-4">
-            <x-input-label for="description" :value="__('Description')" />
-            <x-text-input id="description" class="block mt-1 w-full" type="text" name="description" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('description')" class="mt-2" />
+            <x-input-label for="category" :value="__('category')" />
+            <x-text-input id="category" class="block mt-1 w-full" type="text" name="category" required autocomplete="username" />
+            <x-input-error :messages="$errors->get('category')" class="mt-2" />
         </div>
 
         <div class="mt-4">

@@ -30,7 +30,7 @@
                             </div>
                             <h1 class="text-lg font-bold">${{ $item->price }}</h1>
                             <h2 class="text-md font-semibold">{{ $item->name }}</h2>
-                            <h3 class="text-sm">{{ $item->description }}</h3>
+                            <h3 class="text-sm">{{ $item->category }}</h3>
                         </td>
                         @endforeach
                     </tr>
