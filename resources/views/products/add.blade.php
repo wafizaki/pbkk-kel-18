@@ -15,19 +15,15 @@
         </div>
 
         <div class="mt-4">
-    <x-input-label for="category" :value="__('Category')" />
-    <select id="category" name="category" class="block mt-1 w-full border-gray-300 rounded-lg focus:ring focus:border-gray-800" required>
-        <option value="" selected disabled>Select Category</option>
-        <option value="dress" {{ (old('category') == 'dress') ? 'selected' : '' }}>Dresses</option>
-        <option value="pants" {{ (old('category') == 'pants') ? 'selected' : '' }}>Pants</option>
-        <option value="jacket" {{ (old('category') == 'jacket') ? 'selected' : '' }}>Jackets</option>
-        <option value="skirt" {{ (old('category') == 'skirt') ? 'selected' : '' }}>Skirts</option>
-        <option value="shirt" {{ (old('category') == 'shirt') ? 'selected' : '' }}>Shirts</option>
-        <!-- Add more categories as needed -->
-    </select>
-    <x-input-error :messages="$errors->get('category')" class="mt-2" />
-</div>
-
+            <x-input-label for="category" :value="__('Category')" />
+            <select id="category" name="category" class="block mt-1 w-full border-gray-300 rounded-lg focus:ring focus:border-gray-800" required>
+                <option value="" disabled selected>Select Category</option>
+                @foreach(['dress' => 'Dresses', 'pants' => 'Pants', 'jacket' => 'Jackets', 'skirt' => 'Skirts', 'shirt' => 'Shirts'] as $value => $label)
+                    <option value="{{ $value }}" {{ (old('category') == $value) ? 'selected' : '' }}>{{ $label }}</option>
+                @endforeach
+            </select>
+            <x-input-error :messages="$errors->get('category')" class="mt-2" />
+        </div>
 
         <div class="mt-4">
             <x-input-label for="image" :value="__('Upload Photo')" />
@@ -42,9 +38,7 @@
         </div>
 
         <div class="flex justify-end mt-4">
-            <x-primary-button class="ms-4">
-                {{ __('Add New Item') }}
-            </x-primary-button>
+            <x-primary-button class="ms-4">{{ __('Add New Item') }}</x-primary-button>
         </div>
     </form>
 </x-app-layout>
