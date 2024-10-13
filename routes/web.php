@@ -25,7 +25,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/shop', [ProductController::class, 'index'])->name('shop.index');
     Route::get('/add', [ProductController::class, 'addView'])->name('shop.add');
     Route::post('/add', [ProductController::class, 'addStore']);
-
+    Route::get('/edit', [ProductController::class, 'editView'])->name('product.edit');
+    Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('product.edit.view');
+    Route::post('/edit/{id}', [ProductController::class, 'update'])->name('product.update');
+    Route::delete('/product/{id}', [ProductController::class, 'destroy'])->name('product.delete');
 });
 
 require __DIR__.'/auth.php';
