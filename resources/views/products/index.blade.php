@@ -6,20 +6,30 @@
     </head>
 
     <div>
-        <!-- Search Form -->
         <div class="mx-auto px-4">
-            <form action="{{ route('search') }}" method="GET" class="flex gap-4">
-                <input type="text" name="query" placeholder="Search..." value="{{ $query ?? '' }}" class="w-full text-white border rounded-lg bg-transparent focus:outline-none focus:ring focus:border-gray-800">
-                <button type="submit" class="px-4 py-2 border text-white rounded-lg bg-transparent hover:scale-110 duration-300">Search</button>
-
+            <form action="{{ route('search') }}" method="GET" class="flex gap-4 font-semibold">
+                <input type="text" name="query" placeholder="Search..." value="{{ $query ?? '' }}" class="w-[80%] flex text-white border rounded-lg bg-transparent focus:outline-none focus:ring focus:border-gray-800">
+                <button type="submit" class="w-[7%] px-4 py-2 border justify-center text-white rounded-lg bg-transparent hover:scale-110 duration-300 flex">Search</button>
                 <!-- Dropdown for Product Categories -->
-                <select name="category" onchange="this.form.submit()" class="bg-transparent border rounded-lg px-2 py-1 text-white focus:outline-none focus:ring focus:border-gray-800">
-                    <option value="" class="text-black">All Categories</option>
-                    @foreach (['dress', 'pants', 'jacket', 'skirt', 'shirt'] as $cat)
-                        <option value="{{ $cat }}" class="text-black" {{ (request('category') == $cat) ? 'selected' : '' }}>{{ ucfirst($cat) }}</option>
-                    @endforeach
-                </select>
-            </form>
+                <div class="relative flex w-[13%]">
+                    <select name="category" id="categorySelect" onchange="this.form.submit()" class="w-full bg-transparent border rounded-lg px-2 text-white border-white focus:outline-none focus:ring focus:border-gray-800 hover:scale-110 duration-300">
+                        <option value="" class="text-black">All Categories</option>
+                        <option value="dress" class="text-black" {{ (request('category') == 'dress') ? 'selected' : '' }}>Dresses</option>
+                        <option value="pants" class="text-black" {{ (request('category') == 'pants') ? 'selected' : '' }}>Pants</option>
+                        <option value="jacket" class="text-black" {{ (request('category') == 'jacket') ? 'selected' : '' }}>Jackets</option>
+                        <option value="skirt" class="text-black" {{ (request('category') == 'skirt') ? 'selected' : '' }}>Skirts</option>
+                        <option value="shirt" class="text-black" {{ (request('category') == 'shirt') ? 'selected' : '' }}>Shirts</option>
+                    </select>
+                </div>
+                
+            </form>            
+            <form id="imageUploadForm" class="flex flex-col my-4">
+                    <label for="imageInput" class="text-white font-semibold text-xl my-2">Find via Picture!</label>
+                    <div class="flex flex-row gap-4">
+                        <input type="file" id="imageInput" accept="image/*" class="px-2 py-2 flex text-white border rounded-lg bg-transparent focus:outline-none focus:ring focus:border-gray-800">
+                        <button type="button" id="processImageBtn" class="py-2 px-4 flex border text-white items-center rounded-lg bg-transparent hover:scale-110 duration-300">Process Image</button>
+                    </div>
+                </form>
         </div>
 
         <!-- Product Table -->
@@ -35,7 +45,7 @@
                     @foreach ($products->chunk(8) as $chunk)
                     <tr>
                         @foreach ($chunk as $item)
-                        <td class="text-white px-4 py-2 hover:scale-110 duration-300 hover:bg-gray-700 cursor-pointer" onclick="openModal('{{ $item->name }}', '{{ $item->image_url }}', '{{ $item->price }}', '{{ $item->category }}', {{ $item->id }})">
+                        <td class="text-white px-4 py-2 hover:scale-110 duration-300 hover:bg-gray-700 cursor-pointer" onclick="openModal('{{ $item->name }}', '{{ $item->image_url }}', '{{ $item->price }}', '{{ $item->category }}', '{{ $item->id }}')">
                             <div class="bg-gray-300 w-[128px] h-[128px] overflow-hidden mx-auto">
                                 <img src="{{ filter_var($item->image_url, FILTER_VALIDATE_URL) ? $item->image_url : asset('storage/' . ltrim($item->image_url, '/')) }}" alt="{{ $item->name }}" class="w-full h-full object-cover">
                             </div>
@@ -55,9 +65,10 @@
     <div id="productModal" class="w3-modal" style="display:none;">
         <div class="w3-modal-content w3-animate-opacity w3-card-4 w3-center">
             <span onclick="document.getElementById('productModal').style.display='none'" class="w3-button w3-display-topright">&times;</span>
-            <div id="modalContent"></div>
+            <div id="modalContent" ></div>
         </div>
     </div>
+    <script src="{{ asset('js/detectObject.js') }}"></script>
 
     <script>
         function openModal(name, imageUrl, price, category, productId) {

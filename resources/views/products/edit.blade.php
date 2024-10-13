@@ -21,7 +21,8 @@
                     <td class="px-4 py-2 border-b border-gray-600">{{ $product->name }}</td>
                     <td class="px-4 py-2 border-b border-gray-600">{{ $product->category }}</td>
                     <td class="px-4 py-2 border-b border-gray-600">${{ $product->price }}</td>
-                    <td class="px-4 py-2 border-b border-gray-600 flex justify-center items-center">
+                    <td class="px-4 py-2 border-b border-gray-600">
+                        <div class="flex flex-row justify-around items-center gap-4">
                         <a href="{{ route('product.edit.view', $product->id) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 3.1L21 10.225l-3.125 3.125L10.75 6.225l3.125-3.125zM3 21v-3.375l12.975-12.975 3.375 3.375L6.375 21H3z" />
@@ -29,16 +30,17 @@
                             Edit
                         </a>
 
-                        <form action="{{ route('product.delete', $product->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Are you sure you want to delete this product?');">
+                        <form action="{{ route('product.delete', $product->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this product?');">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded flex items-center ml-2">
+                            <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                                 </svg>
                                 Delete
                             </button>
                         </form>
+                        </div>
                     </td>
                 </tr>
                 @endforeach
