@@ -29,6 +29,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('product.edit.view');
     Route::post('/edit/{id}', [ProductController::class, 'update'])->name('product.update');
     Route::delete('/product/{id}', [ProductController::class, 'destroy'])->name('product.delete');
+    Route::get('/cart', [ProductController::class, 'cart'])->name('cart.index'); // Rute untuk halaman cart
+    Route::post('/cart/add/{id}', [ProductController::class, 'addToCart'])->name('cart.add'); // Rute untuk menambah item ke cart
+    Route::post('/cart/remove/{id}', [ProductController::class, 'removeFromCart'])->name('cart.remove'); // Rute untuk menghapus item dari cart
+    Route::post('/checkout', [ProductController::class, 'checkout'])->name('checkout');
+    Route::post('/checkout/process', [ProductController::class, 'processCheckout'])->name('process.checkout'); // Rute untuk memproses checkout
 });
 
 require __DIR__.'/auth.php';
