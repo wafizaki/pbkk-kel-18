@@ -23,13 +23,18 @@
                 </div>
                 
             </form>            
-            <form id="imageUploadForm" class="flex flex-col my-4">
-                    <label for="imageInput" class="text-white font-semibold text-xl my-2">Find via Picture!</label>
-                    <div class="flex flex-row gap-4">
-                        <input type="file" id="imageInput" accept="image/*" class="px-2 py-2 flex text-white border rounded-lg bg-transparent focus:outline-none focus:ring focus:border-gray-800">
-                        <button type="button" id="processImageBtn" class="py-2 px-4 flex border text-white items-center rounded-lg bg-transparent hover:scale-110 duration-300">Process Image</button>
-                    </div>
-                </form>
+            <form id="imageUploadForm" class="flex flex-row items-center my-4 justify-center">
+                <label for="imageInput" class="text-white font-semibold text-xl my-2 mr-4">Find via Picture!</label>
+                <input type="file" id="imageInput" accept="image/*" class="file-input hidden" 
+                    onchange="document.getElementById('processImageBtn').click()">
+                <label for="imageInput" class="py-2 px-4 flex border text-white items-center rounded-lg bg-transparent hover:scale-110 duration-300 cursor-pointer">
+                    <i class="fas fa-camera mr-2 text-white"></i>
+                </label>
+                <button type="button" id="processImageBtn" 
+                    class="hidden py-2 px-4 flex border text-white items-center rounded-lg bg-transparent hover:scale-110 duration-300">
+                    Process Image
+                </button>
+            </form>
         </div>
 
         <!-- Product Table -->
