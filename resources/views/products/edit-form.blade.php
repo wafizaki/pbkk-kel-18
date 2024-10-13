@@ -10,17 +10,15 @@
             </div>
 
             <div class="mb-4">
-                <x-input-label for="category" :value="__('Category')" />
-                <select id="category" name="category" class="block mt-1 w-full border-gray-300 rounded-lg focus:ring focus:border-gray-800" required>
+                <label class="block text-white" for="category">Category:</label>
+                <select id="category" name="category" class="w-full border-gray-300 rounded-lg focus:ring focus:border-gray-800" required>
                     <option value="" selected disabled>Select Category</option>
-                    <option value="dress" {{ (old('category', $product->category) == 'dress') ? 'selected' : '' }}>Dresses</option>
-                    <option value="pants" {{ (old('category', $product->category) == 'pants') ? 'selected' : '' }}>Pants</option>
-                    <option value="jacket" {{ (old('category', $product->category) == 'jacket') ? 'selected' : '' }}>Jackets</option>
-                    <option value="skirt" {{ (old('category', $product->category) == 'skirt') ? 'selected' : '' }}>Skirts</option>
-                    <option value="shirt" {{ (old('category', $product->category) == 'shirt') ? 'selected' : '' }}>Shirts</option>
-                    <!-- Add more categories as needed -->
+                    <option value="dress" {{ old('category', $product->category) == 'dress' ? 'selected' : '' }}>Dresses</option>
+                    <option value="pants" {{ old('category', $product->category) == 'pants' ? 'selected' : '' }}>Pants</option>
+                    <option value="jacket" {{ old('category', $product->category) == 'jacket' ? 'selected' : '' }}>Jackets</option>
+                    <option value="skirt" {{ old('category', $product->category) == 'skirt' ? 'selected' : '' }}>Skirts</option>
+                    <option value="shirt" {{ old('category', $product->category) == 'shirt' ? 'selected' : '' }}>Shirts</option>
                 </select>
-                <x-input-error :messages="$errors->get('category')" class="mt-2" />
             </div>
 
             <div class="mb-4">
@@ -30,13 +28,14 @@
 
             <div class="mb-4">
                 <label class="block text-white" for="image">Product Image:</label>
-                <input type="file" id="image" name="image" class="w-full p-2 border border-gray-600 rounded">
+                <input type="file" id="image" name="image" class="w-full p-2 border border-gray-600 rounded text-white">
             </div>
 
             <div class="flex justify-end mt-4">
-                <x-primary-button type="submit" class="ms-4">
-                    {{ __('Update Product') }}
-                </x-primary-button>
-            </div>        </form>
+                <button type="submit" class="ms-4 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded">
+                    Update Product
+                </button>
+            </div>
+        </form>
     </div>
 </x-app-layout>
