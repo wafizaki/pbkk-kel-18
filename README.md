@@ -6,7 +6,16 @@
 | Nayla Arina              | 5025221029 | PBKK (C) |
 | Muhammad Wafi Zaki Hanif | 5025221039 | PBKK (C) |
 
-## Cara run:
+## Cara Pake
+
+### Langkah Awal
+
+0. Clone Repository `git clone https://github.com/wafizaki/pbkk-kel-18.git`
+1. Kalau sudah clone repository tapi belum terupdate, buka terminal lalu tulis command `git pull --rebase origin main` (Kalau udah terupdate gausah)
+2. Kalau ada conflict, resolve di merge editor. (Pilih yang mau)
+3. Buka terminal baru lalu ikuti langkah dibawah
+
+### Terminal 1
 
 1. Nyalain XAMPP (MySQL & Apache)
 2. `composer install`
@@ -19,9 +28,10 @@
 9. `php artisan serve`
 10. `npm install axios`
 
-di terminal lain:  
-9. `npm install`  
-10. `npm run dev`
+### Terminal 2
+
+1. `npm install`  
+2. `npm run dev`
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
