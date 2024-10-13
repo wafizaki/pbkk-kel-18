@@ -6,11 +6,12 @@ Cara run:
 5. `php artisan migrate`
 6. `php artisan db:seed`
 7. `php artisan db:seed --class=ProductSeeder`
-8. `php artisan serve`
+8. `php artisan storage:link`
+9. `php artisan serve`
 
-di terminal lain:
-10. `npm install`
-11. `npm run dev`
+di terminal lain:  
+9. `npm install`  
+10. `npm run dev`  
 
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
