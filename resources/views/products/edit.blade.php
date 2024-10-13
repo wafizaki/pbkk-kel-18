@@ -29,7 +29,6 @@
                             Edit
                         </a>
 
-                        <!-- Delete Form -->
                         <form action="{{ route('product.delete', $product->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Are you sure you want to delete this product?');">
                             @csrf
                             @method('DELETE')
