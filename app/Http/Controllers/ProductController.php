@@ -67,5 +67,64 @@ class ProductController extends Controller
 
     return redirect()->route('shop.index')->with('success', 'Product added successfully!'); // Menambahkan pesan sukses
 }
+public function editView()
+{
+    // Ambil semua produk untuk diedit
+    $products = Product::all();
+
+    // Tampilkan halaman edit dengan produk yang ada
+    return view('products.edit', compact('products'));
+}
+
+public function edit($id)
+{
+    // Retrieve the product by its ID
+    $product = Product::findOrFail($id);
+
+    // Return the edit view with the product data
+    return view('products.edit-form', compact('product'));
+}
+
+public function update(Request $request, $id): RedirectResponse
+{
+    // Validate input
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'category' => 'required|string|max:255',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Optional image
+        'price' => 'required|numeric|min:0',
+    ]);
+
+    // Retrieve the product by its ID
+    $product = Product::findOrFail($id);
+
+    // Update the product details
+    $product->name = $request->name;
+    $product->category = $request->category;
+    $product->price = $request->price;
+
+    // If a new image is uploaded, store it and update the image_url
+    if ($request->hasFile('image')) {
+        // Delete old image if it exists
+        Storage::disk('public')->delete($product->image_url);
+
+        // Store the new image
+        $imagePath = $request->file('image')->store('images', 'public');
+        $product->image_url = $imagePath;
+    }
+
+    // Save the changes
+    $product->save();
+
+    return redirect()->route('shop.index')->with('success', 'Product updated successfully!');
+}
+public function destroy($id)
+{
+    $product = Product::findOrFail($id);
+    $product->delete();
+
+    return redirect()->route('shop.index')->with('success', 'Product deleted successfully.');
+}
+
 
 }
