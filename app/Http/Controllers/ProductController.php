@@ -41,90 +41,156 @@ class ProductController extends Controller
 
     public function addView()
     {
-        return view('products.add');
+        return view('products.add'); // Show the add product form
     }
 
     public function addStore(Request $request): RedirectResponse
-{
-    // Validasi input
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'category' => 'required|string|max:255',
-        'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi untuk foto
-        'price' => 'required|numeric|min:0',
-    ]);
+    {
+        // Validate input
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'category' => 'required|string|max:255',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate image
+            'price' => 'required|numeric|min:0',
+        ]);
 
-    // Menyimpan gambar
-    $imagePath = $request->file('image')->store('images', 'public'); // Simpan gambar ke storage
+        // Save image
+        $imagePath = $request->file('image')->store('images', 'public'); // Store image
 
-    // Membuat produk baru
-    Product::create([
-        'name' => $request->name,
-        'category' => $request->category, // Kategori diambil dari input teks
-        'image_url' => $imagePath, // Mendapatkan URL untuk gambar yang disimpan
-        'price' => $request->price,
-    ]);
+        // Create a new product
+        Product::create([
+            'name' => $request->name,
+            'category' => $request->category,
+            'image_url' => $imagePath,
+            'price' => $request->price,
+        ]);
 
-    return redirect()->route('shop.index')->with('success', 'Product added successfully!'); // Menambahkan pesan sukses
-}
-public function editView()
-{
-    // Ambil semua produk untuk diedit
-    $products = Product::all();
-
-    // Tampilkan halaman edit dengan produk yang ada
-    return view('products.edit', compact('products'));
-}
-
-public function edit($id)
-{
-    // Retrieve the product by its ID
-    $product = Product::findOrFail($id);
-
-    // Return the edit view with the product data
-    return view('products.edit-form', compact('product'));
-}
-
-public function update(Request $request, $id): RedirectResponse
-{
-    // Validate input
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'category' => 'required|string|max:255',
-        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Optional image
-        'price' => 'required|numeric|min:0',
-    ]);
-
-    // Retrieve the product by its ID
-    $product = Product::findOrFail($id);
-
-    // Update the product details
-    $product->name = $request->name;
-    $product->category = $request->category;
-    $product->price = $request->price;
-
-    // If a new image is uploaded, store it and update the image_url
-    if ($request->hasFile('image')) {
-        // Delete old image if it exists
-        Storage::disk('public')->delete($product->image_url);
-
-        // Store the new image
-        $imagePath = $request->file('image')->store('images', 'public');
-        $product->image_url = $imagePath;
+        return redirect()->route('shop.index')->with('success', 'Product added successfully!'); // Success message
     }
 
-    // Save the changes
-    $product->save();
+    public function editView()
+    {
+        // Retrieve all products for editing
+        $products = Product::all();
+        return view('products.edit', compact('products')); // Show edit view with existing products
+    }
 
-    return redirect()->route('shop.index')->with('success', 'Product updated successfully!');
-}
-public function destroy($id)
-{
-    $product = Product::findOrFail($id);
-    $product->delete();
+    public function edit($id)
+    {
+        $product = Product::findOrFail($id); // Retrieve the product by its ID
+        return view('products.edit-form', compact('product')); // Return edit view with product data
+    }
 
-    return redirect()->route('shop.index')->with('success', 'Product deleted successfully.');
-}
+    public function update(Request $request, $id): RedirectResponse
+    {
+        // Validate input
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'category' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Optional image
+            'price' => 'required|numeric|min:0',
+        ]);
 
+        $product = Product::findOrFail($id); // Retrieve the product by its ID
 
+        // Update product details
+        $product->name = $request->name;
+        $product->category = $request->category;
+        $product->price = $request->price;
+
+        // If a new image is uploaded, store it and update the image_url
+        if ($request->hasFile('image')) {
+            // Delete old image if it exists
+            Storage::disk('public')->delete($product->image_url);
+            $imagePath = $request->file('image')->store('images', 'public'); // Store the new image
+            $product->image_url = $imagePath;
+        }
+
+        $product->save(); // Save changes
+        return redirect()->route('shop.index')->with('success', 'Product updated successfully!');
+    }
+
+    public function destroy($id)
+    {
+        $product = Product::findOrFail($id);
+        $product->delete(); // Delete the product
+        return redirect()->route('shop.index')->with('success', 'Product deleted successfully.');
+    }
+
+    // Display the cart page
+    public function cart()
+    {
+        $cart = session()->get('cart', []); // Retrieve cart data from session
+        return view('products.cart', compact('cart')); // Show cart view with cart data
+    }
+
+    public function addToCart(Request $request, $id)
+    {
+        $product = Product::find($id);
+
+        if (!$product) {
+            return redirect()->back()->withErrors(['message' => 'Product not found']);
+        }
+
+        $cart = session()->get('cart', []); // Retrieve cart from session
+
+        // If product already in cart, increase quantity
+        if (isset($cart[$id])) {
+            $cart[$id]['quantity'] += $request->input('quantity', 1); // Add quantity
+        } else {
+            // Add new product to cart
+            $cart[$id] = [
+                'name' => $product->name,
+                'quantity' => $request->input('quantity', 1),
+                'price' => $product->price,
+                'image_url' => $product->image_url,
+            ];
+        }
+
+        session()->put('cart', $cart); // Save cart back to session
+        return redirect()->route('shop.index')->with('success', 'Product added to cart successfully!');
+    }
+
+    // Remove product from cart
+    public function removeFromCart($id)
+    {
+        $cart = session()->get('cart');
+
+        // If product exists in cart, remove it
+        if (isset($cart[$id])) {
+            unset($cart[$id]);
+            session()->put('cart', $cart);
+        }
+
+        return response()->json(['success' => true, 'message' => 'Product removed from cart successfully.']);
+    }
+
+    public function checkout(Request $request)
+    {
+        $cart = session()->get('cart', []);
+        $selectedProducts = [];
+
+        // Retrieve selected products
+        foreach ($request->input('products', []) as $id => $product) {
+            if (isset($cart[$id])) {
+                $selectedProducts[$id] = $cart[$id];
+                $selectedProducts[$id]['quantity'] = $product['quantity'];
+            }
+        }
+
+        // Ensure products are selected
+        if (!empty($selectedProducts)) {
+            return view('products.checkout', compact('selectedProducts'));
+        }
+
+        return redirect()->route('cart.index')->with('error', 'No products selected!');
+    }
+
+    // Method to complete checkout transaction
+    public function processCheckout(Request $request)
+    {
+        // Clear the cart after checkout is complete
+        session()->forget('cart'); // Empty the cart
+        return redirect()->route('cart.index')->with('success', 'Checkout completed successfully!');
+    }
 }
