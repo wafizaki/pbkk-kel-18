@@ -15,9 +15,9 @@ document
             // Send the base64 image to Roboflow
             axios({
                 method: "POST",
-                url: "https://detect.roboflow.com/tugas-pbkk-olshop/3",
+                url: "https://detect.roboflow.com/pbkk-ktp2z/1",
                 params: {
-                    api_key: "6FYdjBZRZPG88GqzJxQo",
+                    api_key: "BlWuPckGMJfSImJQh71n",
                 },
                 data: base64Image,
                 headers: {
