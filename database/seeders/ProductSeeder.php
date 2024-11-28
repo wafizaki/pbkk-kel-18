@@ -37,7 +37,6 @@ class ProductSeeder extends Seeder
 
             // Skirts
             ['name' => 'Rok Panjang Lipit', 'category' => 'skirt', 'price' => 69.00, 'image_url' => 'https://image.uniqlo.com/UQ/ST3/id/imagesgoods/475399/item/idgoods_08_475399.jpg?width=750', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Rok Katun Bordir', 'category' => 'skirt', 'price' => 59.00, 'image_url' => 'https://image.uniqlo.com/UQ/ST3/id/imagesgoods/475173/item/idgoods_00_475173.jpg?width=750', 'created_at' => now(), 'updated_at' => now()],
             ['name' => 'Rok Sifon Motif', 'category' => 'skirt', 'price' => 59.00, 'image_url' => 'https://image.uniqlo.com/UQ/ST3/id/imagesgoods/475172/item/idgoods_69_475172.jpg?width=750', 'created_at' => now(), 'updated_at' => now()],
             ['name' => 'Rok Span Brushed', 'category' => 'skirt', 'price' => 59.00, 'image_url' => 'https://image.uniqlo.com/UQ/ST3/id/imagesgoods/472562/item/idgoods_31_472562.jpg?width=750', 'created_at' => now(), 'updated_at' => now()],
             ['name' => 'Rok Volume Katun', 'category' => 'skirt', 'price' => 69.00, 'image_url' => 'https://image.uniqlo.com/UQ/ST3/id/imagesgoods/471632/item/idgoods_37_471632.jpg?width=750', 'created_at' => now(), 'updated_at' => now()],

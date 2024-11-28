@@ -1,27 +1,30 @@
 <x-app-layout>
+<x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight text-center">
+            {{ __('Edit Products') }}
+        </h2>
+    </x-slot>
     <div class="mx-auto px-4 py-6">
-        <h2 class="text-white text-2xl font-semibold mb-4">Edit Products</h2>
-
-        <table class="table-auto w-full text-white border border-gray-700">
-            <thead class="bg-gray-800">
+        <table class="table-auto w-full text-gray-800 dark:text-white border border-gray-300 dark:border-gray-600">
+            <thead class="bg-gray-100 dark:bg-gray-800">
                 <tr>
-                    <th class="px-4 py-2 border-b border-gray-600">Image</th>
-                    <th class="px-4 py-2 border-b border-gray-600">Name</th>
-                    <th class="px-4 py-2 border-b border-gray-600">Category</th>
-                    <th class="px-4 py-2 border-b border-gray-600">Price</th>
-                    <th class="px-4 py-2 border-b border-gray-600">Action</th>
+                    <th class="px-4 py-2 border-b border-gray-300 dark:border-gray-600">Image</th>
+                    <th class="px-4 py-2 border-b border-gray-300 dark:border-gray-600">Name</th>
+                    <th class="px-4 py-2 border-b border-gray-300 dark:border-gray-600">Category</th>
+                    <th class="px-4 py-2 border-b border-gray-300 dark:border-gray-600">Price</th>
+                    <th class="px-4 py-2 border-b border-gray-300 dark:border-gray-600">Action</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($products as $product)
-                <tr class="bg-gray-700 hover:bg-gray-600 transition-colors">
-                    <td class="px-4 py-2 border-b border-gray-600">
+                <tr class="bg-white dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+                    <td class="px-4 py-2 border-b border-gray-300 dark:border-gray-600">
                         <img src="{{ filter_var($product->image_url, FILTER_VALIDATE_URL) ? $product->image_url : asset('storage/' . ltrim($product->image_url, '/')) }}" alt="{{ $product->name }}" class="h-20 w-20 object-cover">
                     </td>
-                    <td class="px-4 py-2 border-b border-gray-600">{{ $product->name }}</td>
-                    <td class="px-4 py-2 border-b border-gray-600">{{ $product->category }}</td>
-                    <td class="px-4 py-2 border-b border-gray-600">${{ $product->price }}</td>
-                    <td class="px-4 py-2 border-b border-gray-600">
+                    <td class="px-4 py-2 border-b border-gray-300 dark:border-gray-600">{{ $product->name }}</td>
+                    <td class="px-4 py-2 border-b border-gray-300 dark:border-gray-600">{{ $product->category }}</td>
+                    <td class="px-4 py-2 border-b border-gray-300 dark:border-gray-600">${{ $product->price }}</td>
+                    <td class="px-4 py-2 border-b border-gray-300 dark:border-gray-600">
                         <div class="flex flex-row justify-around items-center gap-4">
                         <a href="{{ route('product.edit.view', $product->id) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">

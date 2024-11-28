@@ -1,26 +1,30 @@
 <x-app-layout>
-    <div class="container mx-auto py-8 text-white">
-        <h1 class="text-2xl font-bold text-center mb-8">Checkout</h1>
+<x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight text-center">
+            {{ __('Checkout') }}
+        </h2>
+    </x-slot>
+    <div class="container mx-auto py-8 text-gray-800 dark:text-white">
 
         @if (!empty($selectedProducts))
             <!-- Input alamat pengiriman -->
             <div class="mb-4">
-                <label for="address" class="block mb-2">Address:</label>
-                <input type="text" id="address" name="address" class="border rounded-lg w-full px-3 py-2 text-black" required>
+                <label for="address" class="block mb-2 text-gray-800 dark:text-white">Address:</label>
+                <input type="text" id="address" name="address" class="border rounded-lg w-full px-3 py-2 text-black dark:text-white dark:bg-gray-800" required>
             </div>
 
             <!-- Tabel produk yang dipilih -->
-            <table class="table-auto w-full mb-6">
-                <thead>
+            <table class="table-auto w-full mb-6 text-gray-800 dark:text-white border border-gray-300 dark:border-gray-600">
+                <thead class="bg-gray-100 dark:bg-gray-800">
                     <tr class="text-left">
-                        <th>Product</th>
-                        <th>Quantity</th>
-                        <th>Price</th>
+                        <th class="px-4 py-2 border-b border-gray-300 dark:border-gray-600">Product</th>
+                        <th class="px-4 py-2 border-b border-gray-300 dark:border-gray-600">Quantity</th>
+                        <th class="px-4 py-2 border-b border-gray-300 dark:border-gray-600">Price</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($selectedProducts as $item)
-                        <tr class="border-b">
+                        <tr class="border-b bg-white dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
                             <td class="px-4 py-2 flex items-center">
                                 <img src="{{ filter_var($item['image_url'], FILTER_VALIDATE_URL) ? $item['image_url'] : asset('storage/' . ltrim($item['image_url'], '/')) }}" alt="{{ $item['name'] }}" class="w-12 h-12 object-cover mr-4">
                                 {{ $item['name'] }}
@@ -43,8 +47,8 @@
             <!-- Input metode pembayaran dan pengiriman -->
             @foreach (['payment_method' => 'Payment Method', 'shipping_method' => 'Shipping Method'] as $name => $label)
                 <div class="mb-4">
-                    <label for="{{ $name }}" class="block mb-2">{{ $label }}:</label>
-                    <select id="{{ $name }}" name="{{ $name }}" class="border rounded-lg w-full px-3 py-2 text-black" required {{ $name === 'shipping_method' ? 'onchange=updateTotal()' : '' }}>
+                    <label for="{{ $name }}" class="block mb-2 text-gray-800 dark:text-white">{{ $label }}:</label>
+                    <select id="{{ $name }}" name="{{ $name }}" class="border rounded-lg w-full px-3 py-2 text-black dark:text-white dark:bg-gray-800" required {{ $name === 'shipping_method' ? 'onchange=updateTotal()' : '' }}>
                         <option value="" disabled selected >Choose {{ strtolower($label) }}</option>
                         @if ($name === 'payment_method')
                             <option value="e-wallet">E-Wallet</option>
@@ -68,7 +72,7 @@
             <div class="text-right">
                 <form method="POST" action="{{ route('process.checkout') }}">
                     @csrf
-                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg">Complete Checkout</button>
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">Complete Checkout</button>
                 </form>
             </div>
         @else
