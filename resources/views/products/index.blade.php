@@ -105,12 +105,12 @@
             <div class="relative w-[13%]">
                 <select name="category" id="categorySelect" onchange="this.form.submit()"
                     class="w-full bg-transparent border rounded-lg px-2 text-black dark:text-white focus:outline-none focus:ring focus:border-gray-800 hover:scale-110 duration-300">
-                    <option value="">All Categories</option>
-                    <option value="dress" {{ request('category') == 'dress' ? 'selected' : '' }}>Dresses</option>
-                    <option value="pants" {{ request('category') == 'pants' ? 'selected' : '' }}>Pants</option>
-                    <option value="jacket" {{ request('category') == 'jacket' ? 'selected' : '' }}>Jackets</option>
-                    <option value="skirt" {{ request('category') == 'skirt' ? 'selected' : '' }}>Skirts</option>
-                    <option value="shirt" {{ request('category') == 'shirt' ? 'selected' : '' }}>Shirts</option>
+                    <option value="" class="dark:text-black">All Categories</option>
+                    <option value="dress" {{ request('category') == 'dress' ? 'selected' : '' }} class="dark:text-black">Dresses</option>
+                    <option value="pants" {{ request('category') == 'pants' ? 'selected' : '' }} class="dark:text-black">Pants</option>
+                    <option value="jacket" {{ request('category') == 'jacket' ? 'selected' : '' }} class="dark:text-black">Jackets</option>
+                    <option value="skirt" {{ request('category') == 'skirt' ? 'selected' : '' }} class="dark:text-black">Skirts</option>
+                    <option value="shirt" {{ request('category') == 'shirt' ? 'selected' : '' }} class="dark:text-black">Shirts</option>
                 </select>
             </div>
         </form>
