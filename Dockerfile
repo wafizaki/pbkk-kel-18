@@ -43,5 +43,5 @@ RUN php artisan config:cache \
     && php artisan view:cache
 
 # Expose port and set the default command
-EXPOSE 8000
-CMD php artisan serve --host=0.0.0.0 --port=8000
+EXPOSE 80
+CMD php artisan serve --host=0.0.0.0 --port=80
